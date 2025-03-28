@@ -1,69 +1,51 @@
-# Welcome to your Lovable project
+
+# Thesk - NITC RideShare App
+
+## Project Overview
+
+Thesk RideShare is a carpooling application designed specifically for NITC (National Institute of Technology, Calicut) students. The platform facilitates ride sharing among students, making travel more affordable and convenient while reducing the environmental impact.
+
+## Key Features
+
+- **User Authentication**: Secure login/signup for NITC students
+- **Create Rides**: Drivers can offer rides with details like departure time, available seats, and pricing
+- **Find Rides**: Students can search for available rides based on destination and time
+- **Ride Management**: View upcoming and past rides
+- **User Profiles**: With ratings and ride history
+- **Booking System**: Reserve seats on available rides
 
 ## Project info
 
 **URL**: https://lovable.dev/projects/76fd72f8-a08c-4532-ae3a-7eeaff1745ba
 
-## How can I edit this code?
+## Technology Stack
 
-There are several ways of editing your application.
+- **Frontend**: React, TypeScript, Tailwind CSS
+- **UI Components**: Shadcn UI
+- **State Management**: React Context API
+- **Routing**: React Router
+- **Build Tool**: Vite
 
-**Use Lovable**
+## Getting Started
 
-Simply visit the [Lovable Project](https://lovable.dev/projects/76fd72f8-a08c-4532-ae3a-7eeaff1745ba) and start prompting.
+```bash
+# Clone the repository
+git clone <repository-url>
 
-Changes made via Lovable will be committed automatically to this repo.
+# Navigate to project directory
+cd thesk-ride-share-harmony
 
-**Use your preferred IDE**
+# Install dependencies
+npm install
 
-If you want to work locally using your own IDE, you can clone this repo and push changes. Pushed changes will also be reflected in Lovable.
-
-The only requirement is having Node.js & npm installed - [install with nvm](https://github.com/nvm-sh/nvm#installing-and-updating)
-
-Follow these steps:
-
-```sh
-# Step 1: Clone the repository using the project's Git URL.
-git clone <YOUR_GIT_URL>
-
-# Step 2: Navigate to the project directory.
-cd <YOUR_PROJECT_NAME>
-
-# Step 3: Install the necessary dependencies.
-npm i
-
-# Step 4: Start the development server with auto-reloading and an instant preview.
+# Start the development server
 npm run dev
 ```
 
-**Edit a file directly in GitHub**
+## License
 
-- Navigate to the desired file(s).
-- Click the "Edit" button (pencil icon) at the top right of the file view.
-- Make your changes and commit the changes.
+This project is private and not licensed for public use without permission.
 
-**Use GitHub Codespaces**
+## About Thesk
 
-- Navigate to the main page of your repository.
-- Click on the "Code" button (green button) near the top right.
-- Select the "Codespaces" tab.
-- Click on "New codespace" to launch a new Codespace environment.
-- Edit files directly within the Codespace and commit and push your changes once you're done.
-
-## What technologies are used for this project?
-
-This project is built with .
-
-- Vite
-- TypeScript
-- React
-- shadcn-ui
-- Tailwind CSS
-
-## How can I deploy this project?
-
-Simply open [Lovable](https://lovable.dev/projects/76fd72f8-a08c-4532-ae3a-7eeaff1745ba) and click on Share -> Publish.
-
-## I want to use a custom domain - is that possible?
-
-We don't support custom domains (yet). If you want to deploy your project under your own domain then we recommend using Netlify. Visit our docs for more details: [Custom domains](https://docs.lovable.dev/tips-tricks/custom-domain/)
+Thesk focuses on creating community-driven solutions that make transportation more efficient, affordable, and sustainable for educational institutions.

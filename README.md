@@ -14,10 +14,6 @@ Thesk RideShare is a carpooling application designed specifically for NITC (Nati
 - **User Profiles**: With ratings and ride history
 - **Booking System**: Reserve seats on available rides
 
-## Project info
-
-**URL**: https://lovable.dev/projects/76fd72f8-a08c-4532-ae3a-7eeaff1745ba
-
 ## Technology Stack
 
 - **Frontend**: React, TypeScript, Tailwind CSS

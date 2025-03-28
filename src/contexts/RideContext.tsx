@@ -8,6 +8,7 @@ export type Ride = {
   driverName: string;
   driverAvatar?: string;
   driverRating?: number;
+  rideCount?: number; // Added rideCount property
   from: string;
   fromDetails?: string;
   to: string;
@@ -42,6 +43,7 @@ const sampleRides: Ride[] = [
     driverName: "Priya K",
     driverAvatar: "/lovable-uploads/e057154a-3158-4bee-bac9-d310e5d6d6dc.png",
     driverRating: 4.9,
+    rideCount: 15, // Added rideCount data
     from: "NITC Campus",
     fromDetails: "Main Gate",
     to: "Calicut Airport",
@@ -58,6 +60,7 @@ const sampleRides: Ride[] = [
     driverName: "Rahul S",
     driverAvatar: "/lovable-uploads/a1260d53-2c2f-4692-a28c-1fb1211b11b0.png",
     driverRating: 4.8,
+    rideCount: 20, // Added rideCount data
     from: "NITC",
     to: "Airport",
     date: new Date().toISOString().split('T')[0],
@@ -72,6 +75,7 @@ const sampleRides: Ride[] = [
     driverName: "Priya K",
     driverAvatar: "/lovable-uploads/e057154a-3158-4bee-bac9-d310e5d6d6dc.png",
     driverRating: 4.9,
+    rideCount: 15, // Added rideCount data
     from: "NITC",
     to: "Kozhikode City",
     date: new Date(Date.now() - 86400000).toISOString().split('T')[0], // Yesterday

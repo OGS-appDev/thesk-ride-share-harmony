@@ -30,13 +30,36 @@ const CreateRide = () => {
     }
   }, [isAuthenticated, navigate]);
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!user) return;
     
     setIsSubmitting(true);
     
     try {
+
+      // request server
+      const response = await fetch(`${import.meta.env.VITE_API_URL}/ride`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          userId: user.id,
+          startingPoint: from,
+          destination: to,
+          travelDate: date,
+          travelTime: time,
+          seatCount: parseInt(seats),
+          price: parseFloat(price),
+          note: notes
+        }),
+      });
+      if (!response.ok) {
+        throw new Error("Failed to create ride");
+      }
+      const data = await response.json();
+
       addRide({
         driverId: user.id,
         driverName: user.name,
@@ -145,7 +168,7 @@ const CreateRide = () => {
             </div>
             
             <div>
-              <label htmlFor="price" className="block text-sm font-medium text-gray-700 mb-1">Price per seat</label>
+              <label htmlFor="price" className="block text-sm font-medium text-gray-700 mb-1">Total Price</label>
               <Input
                 id="price"
                 type="number"

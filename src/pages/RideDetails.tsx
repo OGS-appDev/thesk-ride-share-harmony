@@ -40,30 +40,27 @@ const RideDetails = () => {
     return null;
   }
 
-  const handleBookRide = () => {
+  const handleBookRide = async () => {
     if (!ride || !user) return;
     
     setIsBooking(true);
     
-    // Process booking
-    setTimeout(() => {
-      try {
-        bookRide(ride.id);
-        toast({
-          title: "Ride booked",
-          description: "Your booking has been confirmed",
-        });
-        navigate("/dashboard");
-      } catch (error) {
-        toast({
-          title: "Booking failed",
-          description: "Something went wrong, please try again",
-          variant: "destructive",
-        });
-      } finally {
-        setIsBooking(false);
-      }
-    }, 1000);
+    try {
+      await bookRide(ride.id);
+      toast({
+        title: "Ride booked",
+        description: "Your booking has been confirmed",
+      });
+      navigate("/dashboard");
+    } catch (error) {
+      toast({
+        title: "Booking failed",
+        description: "Something went wrong, please try again",
+        variant: "destructive",
+      });
+    } finally {
+      setIsBooking(false);
+    }
   };
 
   const isDriver = user?.id === ride.driverId;
@@ -127,7 +124,7 @@ const RideDetails = () => {
             </div>
             
             <div className="p-3 bg-gray-50 rounded-lg">
-              <h4 className="text-sm text-gray-600 mb-1">Price per seat</h4>
+              <h4 className="text-sm text-gray-600 mb-1">Total Price</h4>
               <p className="font-medium text-blue-500">₹{ride.price}</p>
             </div>
             

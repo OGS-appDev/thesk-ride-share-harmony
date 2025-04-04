@@ -1,4 +1,3 @@
-
 import React, { createContext, useContext, useState, useEffect } from "react";
 
 // Define user type
@@ -33,31 +32,12 @@ export const useAuth = () => {
   return context;
 };
 
-// Sample users data (mock data for demo)
-const sampleUsers = [
-  {
-    id: "1",
-    name: "Rahul S",
-    email: "rahul@nitc.ac.in",
-    password: "password",
-    avatar: "/lovable-uploads/a1260d53-2c2f-4692-a28c-1fb1211b11b0.png",
-    rating: 4.8,
-    rideCount: 20
-  },
-  {
-    id: "2",
-    name: "Priya K",
-    email: "priya@nitc.ac.in",
-    password: "password",
-    avatar: "/lovable-uploads/e057154a-3158-4bee-bac9-d310e5d6d6dc.png",
-    rating: 4.9,
-    rideCount: 20
-  }
-];
-
 // Auth provider component
-export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
+export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({
+  children,
+}) => {
   const [user, setUser] = useState<User | null>(null);
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
 
   // Check if user is already logged in
@@ -65,7 +45,11 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
     const storedUser = localStorage.getItem("user");
     if (storedUser) {
       setUser(JSON.parse(storedUser));
+      setIsLoggedIn(true);
+      console.log("printing");
     }
+    console.log("User from local storage:", JSON.parse(storedUser));
+    console.log(isLoggedIn);
     setIsLoading(false);
   }, []);
 
@@ -73,13 +57,22 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
   const login = async (email: string, password: string) => {
     setIsLoading(true);
     // Mock login delay
-    await new Promise(resolve => setTimeout(resolve, 1000));
-    
+    await new Promise((resolve) => setTimeout(resolve, 1000));
+
     // Find user with matching email and password
-    const foundUser = sampleUsers.find(u => u.email === email && u.password === password);
-    
-    if (foundUser) {
-      const { password, ...userWithoutPassword } = foundUser;
+    const response = await fetch(`${import.meta.env.VITE_API_URL}/login`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ email, password }),
+    });
+
+    const data = await response.json();
+    console.log(data);
+
+    if (data.status === true) {
+      const { password, ...userWithoutPassword } = data;
       setUser(userWithoutPassword);
       localStorage.setItem("user", JSON.stringify(userWithoutPassword));
     } else {
@@ -92,24 +85,34 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
   const signup = async (name: string, email: string, password: string) => {
     setIsLoading(true);
     // Mock signup delay
-    await new Promise(resolve => setTimeout(resolve, 1000));
-    
+    await new Promise((resolve) => setTimeout(resolve, 1000));
+
+    // Register Request
+    const response = await fetch(`${import.meta.env.VITE_API_URL}/register`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ name, email, password }),
+    });
+
+    const user = await response.json();
+
     // Check if email already exists
-    const emailExists = sampleUsers.some(u => u.email === email);
-    if (emailExists) {
+    if (!response.ok) {
       setIsLoading(false);
-      throw new Error("Email already registered");
+      throw new Error(user.message || "Email already exists");
     }
-    
+
     // Create new user
     const newUser = {
-      id: (sampleUsers.length + 1).toString(),
+      id: user.userId,
       name,
       email,
       rating: 5.0,
-      rideCount: 0
+      rideCount: 0,
     };
-    
+
     setUser(newUser);
     localStorage.setItem("user", JSON.stringify(newUser));
     setIsLoading(false);
@@ -128,8 +131,8 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
         login,
         signup,
         logout,
-        isAuthenticated: !!user,
-        isLoading
+        isAuthenticated: localStorage.getItem("user") ? true : false,
+        isLoading,
       }}
     >
       {children}

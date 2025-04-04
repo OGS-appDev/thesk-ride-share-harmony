@@ -99,6 +99,20 @@ export const useRides = () => {
 export const RideProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   const [rides, setRides] = useState<Ride[]>(sampleRides);
 
+  useEffect(()  => {
+    // Fetch rides from server or local storage if needed
+    // For now, we are using sample data
+
+    const fetchRides = async () => {
+      // Simulate fetching data from an API or local storage
+      const response = await fetch(`${import.meta.env.VITE_API_URL}/rides`);
+      const data = await response.json();
+      setRides(data);
+    }
+
+    fetchRides();
+  }, []);
+
   // Find ride by ID
   const findRideById = (id: string) => {
     return rides.find(ride => ride.id === id);
@@ -115,7 +129,25 @@ export const RideProvider: React.FC<{ children: React.ReactNode }> = ({ children
   };
 
   // Book a ride (decrease available seats)
-  const bookRide = (rideId: string) => {
+  const bookRide = async (rideId: string) => {
+
+    const user = JSON.parse(localStorage.getItem("user"));
+    console.log(user.id);
+
+    const response = await fetch(`${import.meta.env.VITE_API_URL}/book`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ userId: user.id, rideId }),
+    });
+
+    const data = await response.json();
+
+    if (!response.ok) {
+      throw new Error(data.message || "Failed to book ride");
+    }
+
     setRides(
       rides.map(ride =>
         ride.id === rideId && ride.seats > 0
@@ -139,7 +171,7 @@ export const RideProvider: React.FC<{ children: React.ReactNode }> = ({ children
 
   // Get upcoming rides
   const upcomingRides = rides.filter(
-    ride => ride.status === "upcoming" && new Date(ride.date + "T" + ride.time) > new Date()
+    ride => ride.status === "upcoming" || new Date(ride.date + "T" + ride.time) > new Date()
   ).sort((a, b) => {
     const dateA = new Date(a.date + "T" + a.time);
     const dateB = new Date(b.date + "T" + b.time);

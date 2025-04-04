@@ -5,7 +5,7 @@ import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Bell } from "lucide-react";
 
 const AppHeader: React.FC<{ title?: string }> = ({ title = "NITC RideShare" }) => {
-  const { user } = useAuth();
+  const { user, logout } = useAuth();
   const navigate = useNavigate();
 
   return (
@@ -37,6 +37,9 @@ const AppHeader: React.FC<{ title?: string }> = ({ title = "NITC RideShare" }) =
             <AvatarFallback>{user.name.charAt(0)}</AvatarFallback>
           </Avatar>
         )}
+        <button className="text-gray-500 hover:text-primary focus:outline-none" onClick={() => logout()}>
+          Logout
+        </button>
       </div>
     </header>
   );
